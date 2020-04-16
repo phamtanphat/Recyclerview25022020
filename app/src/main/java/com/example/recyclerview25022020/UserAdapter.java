@@ -3,8 +3,10 @@ package com.example.recyclerview25022020;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ItemViewHolder>{
 
     private ArrayList<User> mArrayUsers;
+    private OnListenerClickItem onListenerClickItem;
 
     public UserAdapter(){
         mArrayUsers = new ArrayList<>();
@@ -57,11 +60,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ItemViewHolder
     class ItemViewHolder extends RecyclerView.ViewHolder{
         ImageView mImage;
         TextView mTvName,mTvAge;
-        public ItemViewHolder(@NonNull View itemView) {
+        public ItemViewHolder(@NonNull final View itemView) {
             super(itemView);
             mTvAge = itemView.findViewById(R.id.textviewAge);
             mImage = itemView.findViewById(R.id.imageview);
             mTvName = itemView.findViewById(R.id.textviewName);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onListenerClickItem.onItemClick(getLayoutPosition());
+                }
+            });
         }
+    }
+    public void setOnItemClickListener( OnListenerClickItem onListenerClickItem){
+        this.onListenerClickItem = onListenerClickItem;
     }
 }
